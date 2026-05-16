@@ -53,6 +53,25 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+
+    <!-- Снекбар для отображения ошибок -->
+    <v-snackbar
+      v-model="snackbar"
+      multi-line
+      :timeout="2000"
+      color="error"
+    >
+      {{ errorMessage }}
+      <template v-slot:actions>
+        <v-btn
+          variant="text"
+          color="white"
+          @click="closeError"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -61,6 +80,7 @@ export default {
   data() {
     return {
       drawer: false,
+      snackbar: false,
       links: [
         { title: "Login", icon: "mdi-lock", url: "/login" },
         { title: "Registration", icon: "mdi-face", url: "/registration" },
@@ -68,6 +88,27 @@ export default {
         { title: "New ad", icon: "mdi-note-plus-outline", url: "/new" },
         { title: "My ads", icon: "mdi-view-list-outline", url: "/list" }
       ]
+    }
+  },
+  computed: {
+    errorMessage() {
+      return this.$store.getters.error
+    },
+    error() {
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    error(newVal) {
+      if (newVal) {
+        this.snackbar = true
+      }
+    }
+  },
+  methods: {
+    closeError() {
+      this.snackbar = false
+      this.$store.dispatch('clearError')
     }
   }
 }
