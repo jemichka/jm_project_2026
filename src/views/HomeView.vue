@@ -43,9 +43,7 @@
               <v-btn text :to="'/ad/' + ad.id">
                 Open
               </v-btn>
-              <v-btn raised color="primary">
-                Buy
-              </v-btn>
+              <buy-ad-modal :ad="ad"></buy-ad-modal>
             </v-card-actions>	
           </v-card>
         </v-flex>
