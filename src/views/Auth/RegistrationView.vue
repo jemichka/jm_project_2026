@@ -74,13 +74,21 @@ export default {
     } 	
   },
   methods: {
-    onSubmit(){
-      if (this.$refs.form.validate()){
+    onSubmit() {
+      if (this.$refs.form.validate()) {
         const user = {
           email: this.email,
           password: this.password
         }
-        console.log(user)
+        this.$store.dispatch('registerUser', user)
+        console.log('User registered:', user)
+        
+        // Очистка формы и переход на главную
+        this.email = ""
+        this.password = ""
+        this.confirmPassword = ""
+        this.$refs.form.resetValidation()
+        this.$router.push('/')
       }
     }
   }
