@@ -1,12 +1,11 @@
-<template>
+<template> 
   <div>
-    <!-- Карусель (Carousel) -->
     <v-container fluid>
-      <v-row>
-        <v-col cols="12">
+      <v-layout row> 
+        <v-flex xs12>
           <v-carousel>
             <v-carousel-item
-              v-for="ad in ads"
+              v-for="ad in promoAds"
               :key="ad.id"
               :src="ad.src"
             >
@@ -17,17 +16,14 @@
               </div>
             </v-carousel-item>
           </v-carousel>
-        </v-col>
-      </v-row>
+        </v-flex>
+      </v-layout> 
     </v-container>
 
-    <!-- Сетка с карточками товаров (Grid) -->
-    <v-container>
-      <v-row>
-        <v-col
-          cols="12"
-          sm="6"
-          md="4"
+    <v-container grid-list-lg>
+      <v-layout row wrap> 
+        <v-flex 
+          xs12 sm6 md4
           v-for="ad in ads"
           :key="ad.id"
         >
@@ -47,54 +43,28 @@
               <v-btn text :to="'/ad/' + ad.id">
                 Open
               </v-btn>
-              <v-btn color="primary">
+              <v-btn raised color="primary">
                 Buy
               </v-btn>
-            </v-card-actions>
+            </v-card-actions>	
           </v-card>
-        </v-col>
-      </v-row>
+        </v-flex>
+      </v-layout> 
     </v-container>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      ads: [
-        {
-          title: "First",
-          desc: "First Desc",
-          promo: true,
-          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-          id: "1"
-        },
-        {
-          title: "Second",
-          desc: "Second Desc",
-          promo: true,
-          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-          id: "2"
-        },
-        {
-          title: "Third",
-          desc: "Third Desc",
-          promo: true,
-          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-          id: "3"
-        },
-        {
-          title: "Fourth",
-          desc: "Fourth Desc",
-          promo: true,
-          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-          id: "4"
-        }
-      ]
+  computed: { 
+    promoAds() {
+      return this.$store.getters.promoAds
+    },
+    ads() {
+      return this.$store.getters.ads
     }
   }
-}
+} 
 </script>
 
 <style scoped>
@@ -102,7 +72,7 @@ export default {
   position: absolute;
   bottom: 50px;
   left: 50%;
-  background: rgb(0, 0, 0, 0.5);
+  background: rgb(0,0,0,0.5);
   transform: translate(-50%, 0);
   padding: 5px 15px;
   border-top-right-radius: 5px;
